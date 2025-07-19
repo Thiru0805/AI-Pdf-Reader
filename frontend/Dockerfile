@@ -9,10 +9,10 @@ RUN npm run build
 # Step 2: Serve with NGINX
 FROM nginx:alpine
 
-# Add custom NGINX config to support React routes
+# Add React routing support
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Copy React build output to NGINX's public dir
+# Copy build output to NGINX's static folder
 COPY --from=build /app/build /usr/share/nginx/html
 
 EXPOSE 80
