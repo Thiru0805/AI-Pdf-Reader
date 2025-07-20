@@ -4,3 +4,4 @@
 /backend/.env
 /backend/package-lock.json
 /backend/uploads
+/frontend/.env
