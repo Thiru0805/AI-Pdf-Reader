@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-console.log("BASE URL:", API_BASE_URL);
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://ai-pdf-reader-44d1.onrender.com/api';
+
 export const uploadPDF = async (file: File) => {
   const formData = new FormData();
   formData.append('pdf', file);
