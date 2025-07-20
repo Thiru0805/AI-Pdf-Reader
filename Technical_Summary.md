@@ -22,17 +22,19 @@ This layered architecture ensures the frontend remains decoupled from the AI log
 
 🧩 Challenges Faced and Solutions
 
-1. Ollama Integration:
-Running Ollama locally required platform-specific setup and clear documentation. To avoid user confusion, detailed steps were included in the README, including how to install Ollama and run mistral locally using ollama run mistral.
+1. Deployment-Level Issues:
+    During deployment on platforms like Render and Railway, environment variables were not being correctly picked up, especially from .env or Docker-level environment injection. This led to runtime errors like undefined REACT_APP_API_BASE_URL.
 
-2. Git Access Issues:
-I initially faced issues with Git pushing changes under my company credentials. To solve this, I reconfigured Git to use my personal GitHub SSH key and reset the remote origin to ensure all commits reflect my personal identity.
+    To resolve this, I removed all .env references from the frontend (since it's not a Vite app) and hardcoded the backend URL via runtime ENV injection in Dockerfile or deployment settings.
+
+2. Ollama Integration:
+    Running Ollama locally required platform-specific setup and clear documentation. To avoid user confusion, detailed steps were included in the README, including how to install Ollama and run mistral locally using ollama run mistral.
 
 3. Consistent API Responses:
-Different routes were returning inconsistent response structures. I created a common response format (status, message, data, error) to standardize all API outputs and simplify frontend error handling.
+    Different routes were returning inconsistent response structures. I created a common response format (status, message, data, error) to standardize all API outputs and simplify frontend error handling.
 
 4. UI Feedback and Error Handling:
-Errors from the backend were not clearly communicated in the UI. I updated the frontend to capture and display error messages (e.g., if the model is not running or if no PDF is uploaded) in a user-friendly format.
+    Errors from the backend were not clearly communicated in the UI. I updated the frontend to capture and display error messages (e.g., if the model is not running or if no PDF is uploaded) in a user-friendly format.
 
 🛠 What I Would Improve With More Time
 If more time were available, I would:
