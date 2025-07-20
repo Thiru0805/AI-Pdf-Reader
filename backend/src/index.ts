@@ -12,6 +12,10 @@ app.use(cors());
 app.use(express.json());
 app.use(responseFormatter);
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 const pdfRoutes = new PdfRoutes();
 app.use('/api', pdfRoutes.router);
 app.use(errorHandler);
