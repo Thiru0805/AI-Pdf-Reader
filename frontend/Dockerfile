@@ -1,26 +1,24 @@
-# Stage 1: Build React app
-FROM node:18-alpine as build
+# Stage 1: Build the React app
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copy package files and install deps
+# Install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
 
-# ⛳️ COPY the .env file BEFORE build
+# Copy project files and build the app
 COPY . .
-
-# ✅ Ensure .env is present in /app and available during build
-RUN ls -a && cat .env     # optional: for debug
-
-# Build the app with Vite or CRA
 RUN npm run build
 
 # Stage 2: Serve with NGINX
 FROM nginx:1.25-alpine
 
+# Copy custom NGINX config
 COPY default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy build output
+COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
